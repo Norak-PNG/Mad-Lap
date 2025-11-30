@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1006696166110",
+    "project_id": "norak12345",
+    "storage_bucket": "norak12345.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006696166110:android:ad4c3f2b04b6b61092484f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIcJxV0mjRrfByScghg4w1-v60SKS91-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

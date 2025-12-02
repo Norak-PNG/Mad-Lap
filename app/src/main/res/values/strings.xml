@@ -2,4 +2,30 @@
     <string name="app_name">My Application</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="manage_your_expense">Manage Your Expense</string>
+    <string name="latest_expense_25_0_usd">Latest expense: 25.0 USD</string>
+    <string name="email">Email</string>
+    <string name="log_out">Log out</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="amount">Amount</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="currency">Currency</string>
+    <string name="enter_currency">Enter Currency</string>
+    <string name="category">Category</string>
+    <string name="enter_category">Enter Category</string>
+    <string name="remark">Remark</string>
+    <string name="enter_remark">Enter Remark</string>
+    <string name="add">Add</string>
+    <string name="expense_detail">Expense Detail</string>
+    <string name="back">Back</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="expense_list">Expense List</string>
+    <string name="language">Language:</string>
+    <string name="home">Home</string>
+    <string name="view">View</string>
+    <string name="setting">Setting</string>
 </resources>

@@ -15,7 +15,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manage Your Expense"
+        android:text="@string/manage_your_expense"
         android:textSize="42sp"
         android:textAlignment="center"/>
 
@@ -24,7 +24,7 @@
         android:id="@+id/LatestExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Latest expense: 25.0 USD"
+        android:text="@string/latest_expense_25_0_usd"
         android:textSize="24sp"/>
 
     <TextView
@@ -32,7 +32,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="@string/email"
         android:textSize="16sp"/>
 
 
@@ -43,6 +43,6 @@
         android:textColor="#FFFFFF"
         android:backgroundTint="#000000"
         android:layout_marginTop="10dp"
-        android:text="Log out" />
+        android:text="@string/log_out" />
 
 </LinearLayout>

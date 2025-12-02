@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Expense"
+        android:text="@string/add_expense"
         android:layout_marginTop="30dp"
         android:textSize="30sp"/>
 
@@ -19,14 +19,14 @@
         android:id="@+id/textViewa6"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:text="Amount" />
+        android:text="@string/amount" />
 
     <EditText
         android:id="@+id/editTextText1"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:background="@drawable/for_edit_text"
-        android:hint="Enter amount"
+        android:hint="@string/enter_amount"
         android:ems="10"
         android:inputType="text"
         android:padding="10dp"/>
@@ -36,7 +36,7 @@
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Currency"
+        android:text="@string/currency"
         />
 
     <EditText
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
 
         android:background="@drawable/for_edit_text"
-        android:hint="Enter Currency"
+        android:hint="@string/enter_currency"
 
         android:ems="10"
         android:inputType="text"
@@ -55,7 +55,7 @@
         android:id="@+id/textView8"
         android:layout_width="340dp"
         android:layout_marginTop="20dp"
-        android:text="Category"
+        android:text="@string/category"
         android:layout_height="wrap_content"/>
 
     <EditText
@@ -63,7 +63,7 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:background="@drawable/for_edit_text"
-        android:hint="Enter Category"
+        android:hint="@string/enter_category"
         android:padding="10dp"
         android:ems="10"
         android:inputType="text" />
@@ -74,14 +74,14 @@
         android:layout_marginTop="20dp"
 
         android:layout_height="wrap_content"
-        android:text="Remark" />
+        android:text="@string/remark" />
 
     <EditText
         android:id="@+id/editTextText4"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:background="@drawable/for_edit_text"
-        android:hint="Enter Remark"
+        android:hint="@string/enter_remark"
         android:padding="10dp"
         android:ems="10"
         android:inputType="text" />
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Add"
+        android:text="@string/add"
         android:textColor="#FFFFFF"
         android:backgroundTint="#000000"/>
 

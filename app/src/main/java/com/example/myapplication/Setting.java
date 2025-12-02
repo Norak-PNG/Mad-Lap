@@ -53,15 +53,14 @@ public class Setting extends Fragment {
         drop_down_menu.setAdapter(arrayAdapter);
         drop_down_menu.setText(Languages[0], false);
 
-        Locale test = Locale.getDefault();
-        String language = test.getLanguage();
-        Toast.makeText(getContext() , "test " + language, Toast.LENGTH_SHORT).show();
-
-        if (language.equals("km")) {
-            drop_down_menu.setText(Languages[1], false);
-        } else {
-            drop_down_menu.setText(Languages[0], false);
-        }
+//        Locale test = Locale.getDefault();
+//        String language = test.getLanguage();
+//        Toast.makeText(getContext() , "test " + language, Toast.LENGTH_SHORT).show();
+//        if (language.equals("km")) {
+//            drop_down_menu.setText(Languages[1], false);
+//        } else {
+//            drop_down_menu.setText(Languages[0], false);
+//        }
 
 
         drop_down_menu.setOnItemClickListener((parent, view1, position, id) -> {

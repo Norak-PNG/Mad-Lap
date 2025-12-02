@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:textSize="36dp"
-        android:text="Expense List" />
+        android:text="@string/expense_list" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="email">អ៊ីមែល</string>
+    <string name="log_out">ចេញ​ពីប្រព័ន្ធ</string>
+    <string name="add_expense">បន្ថែមចំណាយ</string>
+    <string name="amount">ចំនួន</string>
+    <string name="enter_amount">បញ្ចូលចំនួន</string>
+    <string name="currency">រូបិយប័ណ្ណ</string>
+    <string name="enter_currency">បញ្ចូលរូបិយប័ណ្ណ</string>
+    <string name="category">ប្រភេទ</string>
+    <string name="enter_category">បញ្ចូលប្រភេទ</string>
+    <string name="remark">សេចក្ដីសំគាល់</string>
+    <string name="enter_remark">បញ្ចូលកំណត់ចំណាំ</string>
+    <string name="add">បន្ថែម</string>
+    <string name="expense_detail">ព័ត៌មានលម្អិតចំណាយ</string>
+    <string name="back">"ត្រឡប់ក្រោយ "</string>
+    <string name="login">ចូល</string>
+    <string name="sign_up">ចុះឈ្មោះ</string>
+    <string name="enter_your_email">បញ្ចូលអ៊ីមែលរបស់អ្នក</string>
+    <string name="password">"ពាក្យសម្ងាត់ "</string>
+    <string name="enter_your_password">បញ្ចូលពាក្យសម្ងាត់របស់អ្នក</string>
+    <string name="expense_list">បញ្ជីចំណាយ</string>
+    <string name="language">ភាសា:</string>
+    <string name="home">ផ្ទះ</string>
+    <string name="view">មើល</string>
+    <string name="setting">ការកំណត់</string>
+    <string name="manage_your_expense">គ្រប់គ្រងចំណាយរបស់អ្នក</string>
+</resources>

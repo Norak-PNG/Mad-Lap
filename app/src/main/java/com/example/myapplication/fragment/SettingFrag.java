@@ -11,6 +11,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 
 import com.example.myapplication.R;
+import com.example.myapplication.util.LocateHelper;
 
 import java.util.Locale;
 
@@ -25,20 +26,15 @@ public class SettingFrag extends PreferenceFragmentCompat {
         ListPreference languagePreference = findPreference(PREF_LANGUAGE);
         if (languagePreference != null) {
             languagePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                Log.d("SettingFrag", "Language preference changed to: " + newValue + " " + preference.getKey());
+                String selectedLanguage = (String) newValue;
+                String currentLanguage = Locale.getDefault().getLanguage();
 
-                Locale locale = new Locale(newValue.toString());
-                Locale.setDefault(locale);
-
-                Resources resources = requireActivity().getResources();
-                Configuration config = new Configuration();
-                config.setLocale(locale);
-                resources.updateConfiguration(config, resources.getDisplayMetrics());
-
-                requireActivity().recreate();
+                if (!selectedLanguage.equals(currentLanguage)) {
+                    LocateHelper.setLocale(getContext());
+                    requireActivity().recreate();
+                }
                 return true;
             });
         }
     }
-
 }

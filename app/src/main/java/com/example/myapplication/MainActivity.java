@@ -1,9 +1,8 @@
 package com.example.myapplication;
 
-
 import android.os.Bundle;
+import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,12 +12,18 @@ import com.example.myapplication.fragment.SettingFrag;
 import com.example.myapplication.fragment.ViewFrag;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+
+
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 

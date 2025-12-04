@@ -16,6 +16,8 @@ firebaseFirestore = "26.0.2"
 cronetEmbedded = "141.7340.3"
 recyclerview = "1.4.0"
 preference = "1.2.1"
+roomRuntime = "2.8.4"
+roomCompiler = "2.8.4"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -33,6 +35,8 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 cronet-embedded = { group = "org.chromium.net", name = "cronet-embedded", version.ref = "cronetEmbedded" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

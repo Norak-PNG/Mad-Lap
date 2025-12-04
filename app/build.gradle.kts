@@ -50,8 +50,10 @@ dependencies {
     implementation(libs.cronet.embedded)
     implementation(libs.recyclerview)
     implementation(libs.preference)
+    implementation(libs.room.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    annotationProcessor(libs.room.compiler)
 
 }

@@ -1,12 +1,8 @@
 package com.example.myapplication.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,25 +13,63 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.JsonPlaceholderApi;
 import com.example.myapplication.NewCategoryActivity;
 import com.example.myapplication.Post;
 import com.example.myapplication.R;
 import com.example.myapplication.RetrofitClient;
+import com.example.myapplication.database.AppDatabase;
+import com.example.myapplication.database.Category;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddFrag extends Fragment {
+
+    private AppDatabase appDatabase;
+    private ArrayList<String> categoryList;
+    private ArrayAdapter<String> categoryAdapter;
+    private Spinner categorySpinner;
+    private ActivityResultLauncher<Intent> newCategoryLauncher;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        newCategoryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        String newCategory = result.getData().getStringExtra("newCategory");
+                        if (newCategory != null && !newCategory.isEmpty()) {
+                            if (!categoryList.contains(newCategory)) {
+                                categoryList.add(newCategory);
+                                categoryAdapter.notifyDataSetChanged();
+                                categorySpinner.setSelection(categoryAdapter.getPosition(newCategory));
+                            }
+                        }
+                    }
+                });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,30 +78,33 @@ public class AddFrag extends Fragment {
     }
 
     @Override
-    public  void  onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button add = view.findViewById(R.id.button);
         EditText amount = view.findViewById(R.id.editTextText1);
         EditText currency = view.findViewById(R.id.editTextText2);
         EditText remark = view.findViewById(R.id.editTextText4);
-        Spinner category = view.findViewById(R.id.spinner2);
+        categorySpinner = view.findViewById(R.id.spinner2);
         Button add_category = view.findViewById(R.id.button2);
 
+        appDatabase = AppDatabase.getDatabase(requireContext().getApplicationContext());
 
-        String[] categories = {"Food", "Travel", "Shopping", "Other"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categories);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        category.setAdapter(adapter);
+        categoryList = new ArrayList<>();
+        categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryList);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
+
+        loadCategories();
 
         add_category.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), NewCategoryActivity.class);
-            startActivity(intent);
+            newCategoryLauncher.launch(intent);
         });
 
         add.setOnClickListener(v -> {
             String amount_send = amount.getText().toString();
             String currency_send = currency.getText().toString();
-            String category_send = category.getSelectedItem().toString();
+            String category_send = categorySpinner.getSelectedItem().toString();
             Log.d("ADD_FRAGMENT", category_send);
             String remark_send = remark.getText().toString();
             String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
@@ -95,6 +132,40 @@ public class AddFrag extends Fragment {
 
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadCategories();
+    }
+
+    private void loadCategories() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            List<Category> dbCategories = appDatabase.categoryDao().getAllCategories();
+            final List<String> categoryNames = new ArrayList<>();
+            for (Category cat : dbCategories) {
+                categoryNames.add(cat.name);
+            }
+
+            if(isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    categoryList.clear();
+
+                    String[] staticCategories = getResources().getStringArray(R.array.categories);
+                    categoryList.addAll(Arrays.asList(staticCategories));
+
+                    for (String dbCategoryName : categoryNames) {
+                        if (!categoryList.contains(dbCategoryName)) {
+                            categoryList.add(dbCategoryName);
+                        }
+                    }
+                    categoryAdapter.notifyDataSetChanged();
+                });
+            }
+        });
+    }
+
     private void sendPostToServer(Post post) {
         JsonPlaceholderApi apiService = RetrofitClient.getRetrofitInstance().create(JsonPlaceholderApi.class);
 

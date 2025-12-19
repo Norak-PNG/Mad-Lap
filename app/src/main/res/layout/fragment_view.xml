@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="#F5F6F8"
+    android:background="@color/white"
     tools:context=".fragment.ViewFrag">
 
 
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:textSize="36dp"
+        android:textStyle="bold"
         android:text="@string/expense_list" />
 
     <androidx.recyclerview.widget.RecyclerView

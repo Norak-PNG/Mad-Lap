@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="#F5F6F8"
+    android:background="@color/white"
     tools:context=".ViewDetailActivity">
 
     <TextView
@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/expense_detail"
+        android:textStyle="bold"
         android:textSize="30sp" />
 
     <TextView

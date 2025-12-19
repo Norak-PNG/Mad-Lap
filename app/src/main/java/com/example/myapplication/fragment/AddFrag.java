@@ -62,7 +62,7 @@ public class AddFrag extends Fragment {
     private Button openCameraButton;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
-
+    String imageUrl;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +101,8 @@ public class AddFrag extends Fragment {
         categorySpinner = view.findViewById(R.id.spinner2);
         Button add_category = view.findViewById(R.id.button2);
 
+
+
         appDatabase = AppDatabase.getDatabase(requireContext().getApplicationContext());
 
         categoryList = new ArrayList<>();
@@ -122,9 +124,9 @@ public class AddFrag extends Fragment {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null && data.getData() != null) {
-                            Uri imageUri = data.getData();
-                            Log.d("MainActivity", "Image URI: " + imageUri.toString());
-                            capturedImageView.setImageURI(imageUri);
+                            Uri url = data.getData();
+                            capturedImageView.setImageURI(url);
+                            imageUrl = url.toString();
                         }
                     }
                 });
@@ -134,9 +136,7 @@ public class AddFrag extends Fragment {
                     if (uri != null) {
 
                         capturedImageView.setImageURI(uri);
-
-                        String imageUriString = uri.toString();
-                        Log.d("MainActivity", "Gallery Image URI as String: " + imageUriString);
+                        imageUrl = uri.toString();
                     }
                 });
 
@@ -159,6 +159,7 @@ public class AddFrag extends Fragment {
             String currentDateString = generateIso8601Date();
 
 
+
             if (amount_send.isEmpty() || currency_send.isEmpty() || category_send.isEmpty()) {
                 Toast.makeText(getContext(), "Amount, Currency, and Category cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
@@ -172,6 +173,7 @@ public class AddFrag extends Fragment {
             data.remark = remark_send;
             data.createdBy = email;
             data.createdDate = currentDateString;
+            data.url = imageUrl;
 
 
             sendPostToServer(data);

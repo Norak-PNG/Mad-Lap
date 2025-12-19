@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.database;
 
 import java.util.List;
 import retrofit2.Call;

@@ -10,6 +10,7 @@ import com.example.myapplication.fragment.AddFrag;
 import com.example.myapplication.fragment.HomeFrag;
 import com.example.myapplication.fragment.SettingFrag;
 import com.example.myapplication.fragment.ViewFrag;
+import com.example.myapplication.util.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

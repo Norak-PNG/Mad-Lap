@@ -1,10 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.util;
 
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.myapplication.util.LocaleHelper;
 
 public class BaseActivity extends AppCompatActivity {
 

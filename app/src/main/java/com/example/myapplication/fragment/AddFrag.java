@@ -19,11 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.JsonPlaceholderApi;
+import com.example.myapplication.database.JsonPlaceholderApi;
 import com.example.myapplication.NewCategoryActivity;
-import com.example.myapplication.Post;
+import com.example.myapplication.database.Post;
 import com.example.myapplication.R;
-import com.example.myapplication.RetrofitClient;
+import com.example.myapplication.database.RetrofitClient;
 import com.example.myapplication.database.AppDatabase;
 import com.example.myapplication.database.Category;
 import com.google.firebase.auth.FirebaseAuth;

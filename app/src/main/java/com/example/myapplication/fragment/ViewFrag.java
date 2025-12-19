@@ -12,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.myapplication.JsonPlaceholderApi;
-import com.example.myapplication.Post;
+import com.example.myapplication.database.JsonPlaceholderApi;
+import com.example.myapplication.database.Post;
 import com.example.myapplication.R;
 import com.example.myapplication.RecyclerViewAd;
-import com.example.myapplication.RetrofitClient;
+import com.example.myapplication.database.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -101,6 +101,8 @@ public class AddFrag extends Fragment {
         categorySpinner = view.findViewById(R.id.spinner2);
         Button add_category = view.findViewById(R.id.button2);
 
+        capturedImageView.setImageResource(R.drawable.default_image);
+
 
 
         appDatabase = AppDatabase.getDatabase(requireContext().getApplicationContext());

@@ -8,6 +8,13 @@
     android:gravity="center_horizontal"
     tools:context=".fragment.AddFrag">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/black">
+
+    </FrameLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +88,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/add"
             android:drawableTint="@color/white"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="#060270"
             />
 
     </LinearLayout>
@@ -127,14 +134,14 @@
                 android:id="@+id/open_camera_button"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="#060270"
                 android:text="Open Camera" />
 
             <Button
                 android:id="@+id/galleryButton"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="#060270"
                 android:text="Gallery" />
 
         </LinearLayout>
@@ -155,7 +162,7 @@
         android:layout_marginTop="30dp"
         android:text="@string/add"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#000000"/>
+        android:backgroundTint="#060270"/>
 
 
 </LinearLayout>

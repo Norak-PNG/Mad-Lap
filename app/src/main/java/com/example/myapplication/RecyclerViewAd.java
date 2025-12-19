@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,11 @@ public class RecyclerViewAd extends RecyclerView.Adapter<RecyclerViewAd.ViewHold
 
         String amountText = expense.getAmount() + " " + expense.getCurrency();
         holder.amountTextView.setText(amountText);
+        if (expense.getUrl() != null) {
+            holder.imageView.setImageURI(expense.getUrl());
+        } else {
+            holder.imageView.setImageResource(R.drawable.default_image);
+        }
 
         holder.itemView.setOnClickListener(v -> {
             Log.d("RecyclerViewAd", "Item clicked at position: " + position);
@@ -68,12 +74,14 @@ public class RecyclerViewAd extends RecyclerView.Adapter<RecyclerViewAd.ViewHold
         TextView remarkTextView;
         TextView categoryTextView;
         TextView amountTextView;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             remarkTextView = itemView.findViewById(R.id.item_remark);
             categoryTextView = itemView.findViewById(R.id.item_category);
             amountTextView = itemView.findViewById(R.id.item_amount);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

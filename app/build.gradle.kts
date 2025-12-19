@@ -32,6 +32,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -56,4 +59,12 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     annotationProcessor(libs.room.compiler)
 
+    implementation("com.google.guava:guava:33.2.1-android")
+    val camerax_version = "1.3.4"
+    implementation ("androidx.camera:camera-core:$camerax_version")
+    implementation ("androidx.camera:camera-camera2:$camerax_version")
+    implementation ("androidx.camera:camera-lifecycle:$camerax_version")
+    implementation ("androidx.camera:camera-video:$camerax_version")
+    implementation ("androidx.camera:camera-view:$camerax_version")
+    implementation ("androidx.camera:camera-extensions:$camerax_version")
 }

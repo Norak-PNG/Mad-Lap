@@ -1,7 +1,10 @@
 package com.example.myapplication.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.CameraActivity;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.database.JsonPlaceholderApi;
 import com.example.myapplication.NewCategoryActivity;
 import com.example.myapplication.database.Post;
@@ -51,6 +57,11 @@ public class AddFrag extends Fragment {
     private ArrayAdapter<String> categoryAdapter;
     private Spinner categorySpinner;
     private ActivityResultLauncher<Intent> newCategoryLauncher;
+    private ImageView capturedImageView;
+    private Button galleryButton;
+    private Button openCameraButton;
+    private ActivityResultLauncher<Intent> cameraLauncher;
+    private ActivityResultLauncher<String> galleryLauncher;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +69,7 @@ public class AddFrag extends Fragment {
         newCategoryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         String newCategory = result.getData().getStringExtra("newCategory");
                         if (newCategory != null && !newCategory.isEmpty()) {
                             if (!categoryList.contains(newCategory)) {
@@ -80,6 +91,9 @@ public class AddFrag extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        capturedImageView = view.findViewById(R.id.captured_image_view);
+        openCameraButton = view.findViewById(R.id.open_camera_button);
+        galleryButton = view.findViewById(R.id.galleryButton);
         Button add = view.findViewById(R.id.button);
         EditText amount = view.findViewById(R.id.editTextText1);
         EditText currency = view.findViewById(R.id.editTextText2);
@@ -100,6 +114,38 @@ public class AddFrag extends Fragment {
             Intent intent = new Intent(getContext(), NewCategoryActivity.class);
             newCategoryLauncher.launch(intent);
         });
+
+
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null && data.getData() != null) {
+                            Uri imageUri = data.getData();
+                            Log.d("MainActivity", "Image URI: " + imageUri.toString());
+                            capturedImageView.setImageURI(imageUri);
+                        }
+                    }
+                });
+
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+
+                        capturedImageView.setImageURI(uri);
+
+                        String imageUriString = uri.toString();
+                        Log.d("MainActivity", "Gallery Image URI as String: " + imageUriString);
+                    }
+                });
+
+        openCameraButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CameraActivity.class);
+            cameraLauncher.launch(intent);
+        });
+
+        galleryButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
 
         add.setOnClickListener(v -> {
             String amount_send = amount.getText().toString();

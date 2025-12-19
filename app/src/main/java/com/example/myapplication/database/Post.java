@@ -1,5 +1,7 @@
 package com.example.myapplication.database;
 
+import android.net.Uri;
+
 public class Post {
 
     public String id;
@@ -9,8 +11,7 @@ public class Post {
     public String remark;
     public String createdBy;
     public String createdDate;
-
-    // --- Standard Java Getters ---
+    public String url;
 
     public String getId() {
         return id;
@@ -38,6 +39,13 @@ public class Post {
 
     public String getCreatedDate() {
         return createdDate;
+    }
+    public Uri getUrl() {
+        if (url != null && !url.isEmpty()) {
+            return Uri.parse(url);
+        } else {
+            return null;
+        }
     }
 
 }

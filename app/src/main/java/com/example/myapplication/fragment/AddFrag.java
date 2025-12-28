@@ -53,15 +53,11 @@ public class AddFrag extends Fragment {
 
     private AppDatabase appDatabase;
     private ArrayList<String> categoryList;
-    private ArrayList<String> currencyList;
-    private ArrayAdapter<String> currencyAdapter;
     private ArrayAdapter<String> categoryAdapter;
     private Spinner categorySpinner;
     private Spinner currency;
     private ActivityResultLauncher<Intent> newCategoryLauncher;
     private ImageView capturedImageView;
-    private Button galleryButton;
-    private Button openCameraButton;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
     private String  imageUri;
@@ -94,8 +90,8 @@ public class AddFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         capturedImageView = view.findViewById(R.id.captured_image_view);
-        openCameraButton = view.findViewById(R.id.open_camera_button);
-        galleryButton = view.findViewById(R.id.galleryButton);
+        Button openCameraButton = view.findViewById(R.id.open_camera_button);
+        Button galleryButton = view.findViewById(R.id.galleryButton);
         Button add = view.findViewById(R.id.button);
         EditText amount = view.findViewById(R.id.editTextText1);
         EditText remark = view.findViewById(R.id.editTextText4);
@@ -105,7 +101,7 @@ public class AddFrag extends Fragment {
         capturedImageView.setImageResource(R.drawable.default_image);
 
 
-        String view_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String view_email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
 
         TextView email_view = view.findViewById(R.id.name);
         email_view.setText(view_email);
@@ -119,12 +115,12 @@ public class AddFrag extends Fragment {
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
 
-        currencyList = new ArrayList<>();
+        ArrayList<String> currencyList = new ArrayList<>();
         currencyList.add("USD");
         currencyList.add("EUR");
         currencyList.add("GBP");
         currencyList.add("JPY");
-        currencyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, currencyList);
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, currencyList);
         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         currency.setAdapter(currencyAdapter);
 
@@ -242,7 +238,8 @@ public class AddFrag extends Fragment {
 
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Expense Added Successfully!", Toast.LENGTH_SHORT).show();
-                    Log.d("ADD_FRAGMENT", "Post successful: " + response.body().toString());
+                    assert response.body() != null;
+                    Log.d("ADD_FRAGMENT", "Post successful: " + response.body());
                 } else {
                     Toast.makeText(getContext(), "Failed to add expense. Code: " + response.code(), Toast.LENGTH_SHORT).show();
                     Log.e("ADD_FRAGMENT", "API Error Code: " + response.code());

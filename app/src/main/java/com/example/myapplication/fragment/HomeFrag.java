@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +45,7 @@ public class HomeFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
 
         TextView email_view = view.findViewById(R.id.name);
         email_view.setText(email);
@@ -83,6 +84,7 @@ public class HomeFrag extends Fragment {
                     String currency = expenses.get(expenses.size() - 1).getCurrency();
                     int amount = expenses.get(expenses.size() - 1).getAmount();
 
+                    assert getView() != null;
                     TextView user = getView().findViewById(R.id.user);
                     TextView LatestExpense = getView().findViewById(R.id.LatestExpense);
                     TextView Date = getView().findViewById(R.id.Date);

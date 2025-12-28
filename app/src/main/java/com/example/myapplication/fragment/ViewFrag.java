@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +30,6 @@ import retrofit2.Response;
 
 public class ViewFrag extends Fragment {
 
-    private RecyclerView recyclerView;
     private RecyclerViewAd recyclerViewAd;
     private List<Post> expenseList;
 
@@ -44,9 +44,9 @@ public class ViewFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         expenseList = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
 
         TextView email_view = view.findViewById(R.id.name);
         email_view.setText(email);
@@ -64,7 +64,7 @@ public class ViewFrag extends Fragment {
         JsonPlaceholderApi apiService = RetrofitClient.getRetrofitInstance().create(JsonPlaceholderApi.class);
         Call<List<Post>> call = apiService.getData();
 
-        call.enqueue(new Callback<List<Post>>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (!isAdded()) return; // Check if fragment is still active

@@ -24,7 +24,7 @@ public class ViewDetailActivity extends AppCompatActivity {
         String currency = getIntent().getStringExtra("currency");
         String date = getIntent().getStringExtra("date");
         String createdBy = getIntent().getStringExtra("createdBy");
-        String id = getIntent().getStringExtra("id");
+
 
         TextView remarkTextView = findViewById(R.id.remark);
         TextView categoryTextView = findViewById(R.id.category);
@@ -43,9 +43,7 @@ public class ViewDetailActivity extends AppCompatActivity {
 
 
         Button back = findViewById(R.id.back);
-        back.setOnClickListener(v -> {
-            finish();
-        });
+        back.setOnClickListener(v -> finish());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

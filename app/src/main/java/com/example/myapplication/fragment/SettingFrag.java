@@ -1,12 +1,9 @@
 package com.example.myapplication.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
-
 import com.example.myapplication.R;
 import com.example.myapplication.util.LocaleHelper;
 

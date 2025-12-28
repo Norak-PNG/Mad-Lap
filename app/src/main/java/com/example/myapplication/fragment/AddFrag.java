@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.CameraActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.database.JsonPlaceholderApi;
@@ -62,7 +63,7 @@ public class AddFrag extends Fragment {
     private Button openCameraButton;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
-    String imageUrl;
+    Uri imageUri;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,9 +127,8 @@ public class AddFrag extends Fragment {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null && data.getData() != null) {
-                            Uri url = data.getData();
-                            capturedImageView.setImageURI(url);
-                            imageUrl = url.toString();
+                            Glide.with(this).load(data.getData()).into(capturedImageView);
+                            imageUri = data.getData();
                         }
                     }
                 });
@@ -136,9 +136,8 @@ public class AddFrag extends Fragment {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     if (uri != null) {
-
-                        capturedImageView.setImageURI(uri);
-                        imageUrl = uri.toString();
+                        Glide.with(this).load(uri).into(capturedImageView);
+                        imageUri = uri;
                     }
                 });
 
@@ -175,7 +174,7 @@ public class AddFrag extends Fragment {
             data.remark = remark_send;
             data.createdBy = email;
             data.createdDate = currentDateString;
-            data.url = imageUrl;
+            data.uri = imageUri;
 
 
             sendPostToServer(data);

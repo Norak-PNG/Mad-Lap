@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.database.Post;
 
 import java.util.List;
@@ -44,11 +45,11 @@ public class RecyclerViewAd extends RecyclerView.Adapter<RecyclerViewAd.ViewHold
 
         String amountText = expense.getAmount() + " " + expense.getCurrency();
         holder.amountTextView.setText(amountText);
-        if (expense.getUrl() != null) {
-            holder.imageView.setImageURI(expense.getUrl());
-        } else {
-            holder.imageView.setImageResource(R.drawable.default_image);
-        }
+        Glide.with(context)
+                .load(expense.getUri())
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.default_image)
+                .into(holder.imageView);
 
         holder.itemView.setOnClickListener(v -> {
             Log.d("RecyclerViewAd", "Item clicked at position: " + position);

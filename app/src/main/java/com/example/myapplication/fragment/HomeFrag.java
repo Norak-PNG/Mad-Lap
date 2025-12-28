@@ -91,8 +91,8 @@ public class HomeFrag extends Fragment {
                     user.setText(expenses.get(expenses.size() - 1).getCreatedBy());
 
 
-                    if (expenses.get(expenses.size() - 1).getUrl() != null) {
-                        imageView.setImageURI(expenses.get(expenses.size() - 1).getUrl());
+                    if (expenses.get(expenses.size() - 1).getUri() != null) {
+                        imageView.setImageURI(expenses.get(expenses.size() - 1).getUri());
                     } else {
                         imageView.setImageResource(R.drawable.default_image);
                     }

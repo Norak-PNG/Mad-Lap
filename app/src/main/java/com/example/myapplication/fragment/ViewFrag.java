@@ -35,7 +35,6 @@ public class ViewFrag extends Fragment {
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
                                           Bundle savedInstanceState) {
-        // Only inflate the layout here and return the view
         return inflater.inflate(R.layout.fragment_view, container, false);
     }
 
@@ -47,13 +46,10 @@ public class ViewFrag extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
 
 
-        // --- ADD THIS LINE ---
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         recyclerViewAd = new RecyclerViewAd(expenseList, getContext());
         recyclerView.setAdapter(recyclerViewAd);
 
-        // 4. This will now work correctly.
         fetchExpenses();
     }
 

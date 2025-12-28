@@ -11,7 +11,7 @@ public class Post {
     public String remark;
     public String createdBy;
     public String createdDate;
-    public String url;
+    public Uri uri;
 
     public String getId() {
         return id;
@@ -40,9 +40,9 @@ public class Post {
     public String getCreatedDate() {
         return createdDate;
     }
-    public Uri getUrl() {
-        if (url != null && !url.isEmpty()) {
-            return Uri.parse(url);
+    public Uri getUri() {
+        if (uri != null && !uri.toString().isEmpty()) {
+            return uri;
         } else {
             return null;
         }

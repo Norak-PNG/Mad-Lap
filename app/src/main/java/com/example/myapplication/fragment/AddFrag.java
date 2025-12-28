@@ -2,9 +2,7 @@ package com.example.myapplication.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.CameraActivity;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.database.JsonPlaceholderApi;
 import com.example.myapplication.NewCategoryActivity;
 import com.example.myapplication.database.Post;

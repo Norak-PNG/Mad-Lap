@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Language Entries -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Khmer</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>en</item>
+        <item>km</item>
+    </string-array>
+    <string-array name="categories">
+        <item>Food</item>
+        <item>Transportation</item>
+        <item>Entertainment</item>
+    </string-array>
+
+</resources>

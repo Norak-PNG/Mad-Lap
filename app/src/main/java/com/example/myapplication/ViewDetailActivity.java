@@ -10,7 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ViewDetail extends AppCompatActivity {
+public class ViewDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class ViewDetail extends AppCompatActivity {
         String currency = getIntent().getStringExtra("currency");
         String date = getIntent().getStringExtra("date");
         String createdBy = getIntent().getStringExtra("createdBy");
-        String id = getIntent().getStringExtra("id");
+
 
         TextView remarkTextView = findViewById(R.id.remark);
         TextView categoryTextView = findViewById(R.id.category);
@@ -43,9 +43,7 @@ public class ViewDetail extends AppCompatActivity {
 
 
         Button back = findViewById(R.id.back);
-        back.setOnClickListener(v -> {
-            finish();
-        });
+        back.setOnClickListener(v -> finish());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

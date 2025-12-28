@@ -6,10 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.myapplication.database.Post;
 
 import java.util.List;
 
@@ -41,10 +45,15 @@ public class RecyclerViewAd extends RecyclerView.Adapter<RecyclerViewAd.ViewHold
 
         String amountText = expense.getAmount() + " " + expense.getCurrency();
         holder.amountTextView.setText(amountText);
+        Glide.with(context)
+                .load(expense.getUri())
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.default_image)
+                .into(holder.imageView);
 
         holder.itemView.setOnClickListener(v -> {
             Log.d("RecyclerViewAd", "Item clicked at position: " + position);
-            Intent intent = new Intent(context, ViewDetail.class);
+            Intent intent = new Intent(context, ViewDetailActivity.class);
             intent.putExtra("remark", expense.getRemark());
             intent.putExtra("category", expense.getCategory());
             intent.putExtra("amount", expense.getAmount());
@@ -66,12 +75,14 @@ public class RecyclerViewAd extends RecyclerView.Adapter<RecyclerViewAd.ViewHold
         TextView remarkTextView;
         TextView categoryTextView;
         TextView amountTextView;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             remarkTextView = itemView.findViewById(R.id.item_remark);
             categoryTextView = itemView.findViewById(R.id.item_category);
             amountTextView = itemView.findViewById(R.id.item_amount);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,9 +22,16 @@ import retrofit2.Response;
 
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.example.myapplication.database.JsonPlaceholderApi;
+import com.example.myapplication.Login;
+import com.example.myapplication.database.Post;
+import com.example.myapplication.R;
+import com.example.myapplication.database.RetrofitClient;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Home extends Fragment {
+public class HomeFrag extends Fragment {
 
 
     @Override
@@ -35,10 +44,11 @@ public class Home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
 
         TextView email_view = view.findViewById(R.id.name);
-        email_view.setText(String.format("Email: %s", email));
+        email_view.setText(email);
 
         Button logout = view.findViewById(R.id.logout);
         logout.setOnClickListener(v -> {
@@ -73,8 +83,23 @@ public class Home extends Fragment {
                 if (expenses != null && !expenses.isEmpty()) {
                     String currency = expenses.get(expenses.size() - 1).getCurrency();
                     int amount = expenses.get(expenses.size() - 1).getAmount();
-                    TextView textView = getView().findViewById(R.id.LatestExpense);
-                    textView.setText("Latest expense: " + amount + " " + currency);
+
+                    assert getView() != null;
+                    TextView user = getView().findViewById(R.id.user);
+                    TextView LatestExpense = getView().findViewById(R.id.LatestExpense);
+                    TextView Date = getView().findViewById(R.id.Date);
+                    ImageView imageView = getView().findViewById(R.id.imageView);
+
+                    LatestExpense.setText(amount + " " + currency);
+                    Date.setText(expenses.get(expenses.size() - 1).getCreatedDate());
+                    user.setText(expenses.get(expenses.size() - 1).getCreatedBy());
+
+
+                    if (expenses.get(expenses.size() - 1).getUri() != null) {
+                        Glide.with(HomeFrag.this).load(expenses.get(expenses.size() - 1).getUri()).into(imageView);
+                    } else {
+                        imageView.setImageResource(R.drawable.default_image);
+                    }
 
                 }
             }

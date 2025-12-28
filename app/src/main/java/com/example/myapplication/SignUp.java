@@ -19,10 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SignUp extends AppCompatActivity {
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
 
@@ -73,7 +74,7 @@ public class SignUp extends AppCompatActivity {
                         }
                         Toast.makeText(SignUp.this, "Sign up successful.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(SignUp.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUp.this, "Authentication failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                         Log.d("Authentication", task.getException().toString());
                         finish();
                     }
@@ -91,8 +92,6 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(SignUp.this, "Sign up successful.", Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(SignUp.this, "Error saving user details.", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(SignUp.this, "Error saving user details.", Toast.LENGTH_SHORT).show());
     }
 }

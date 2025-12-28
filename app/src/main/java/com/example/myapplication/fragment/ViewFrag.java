@@ -64,8 +64,8 @@ public class ViewFrag extends Fragment {
                 if (!isAdded()) return; // Check if fragment is still active
 
                 if (response.isSuccessful() && response.body() != null) {
-                    expenseList.addAll(response.body()); // Add the new data
-                    recyclerViewAd.notifyDataSetChanged(); // Notify the adapter to refresh the view
+                    expenseList.addAll(response.body());
+                    recyclerViewAd.notifyDataSetChanged();
 
                     Log.d("VIEW_FRAGMENT", "Data fetched and adapter updated.");
                 } else {

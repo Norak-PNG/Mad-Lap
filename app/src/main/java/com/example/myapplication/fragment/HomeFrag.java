@@ -22,6 +22,7 @@ import retrofit2.Response;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.database.JsonPlaceholderApi;
 import com.example.myapplication.Login;
 import com.example.myapplication.database.Post;
@@ -93,7 +94,11 @@ public class HomeFrag extends Fragment {
 
                     if (expenses.get(expenses.size() - 1).getUri() != null) {
                         imageView.setImageURI(expenses.get(expenses.size() - 1).getUri());
-                    } else {
+                        Glide.with(HomeFrag.this)
+                                .load(expenses.get(expenses.size() - 1).getUri())
+                                .placeholder(R.drawable.default_image)
+                                .error(R.drawable.default_image)
+                                .into(imageView);                     } else {
                         imageView.setImageResource(R.drawable.default_image);
                     }
                 }

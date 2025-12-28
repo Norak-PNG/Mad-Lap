@@ -63,7 +63,7 @@ public class AddFrag extends Fragment {
     private Button openCameraButton;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
-    Uri imageUri;
+    private String  imageUri;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +128,7 @@ public class AddFrag extends Fragment {
                         Intent data = result.getData();
                         if (data != null && data.getData() != null) {
                             Glide.with(this).load(data.getData()).into(capturedImageView);
-                            imageUri = data.getData();
+                            imageUri = data.getData().toString();
                         }
                     }
                 });
@@ -137,7 +137,7 @@ public class AddFrag extends Fragment {
                 uri -> {
                     if (uri != null) {
                         Glide.with(this).load(uri).into(capturedImageView);
-                        imageUri = uri;
+                        imageUri = uri.toString();
                     }
                 });
 

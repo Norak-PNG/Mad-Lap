@@ -43,6 +43,7 @@ public class HomeFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         TextView email_view = view.findViewById(R.id.name);
@@ -93,8 +94,11 @@ public class HomeFrag extends Fragment {
 
 
                     if (expenses.get(expenses.size() - 1).getUri() != null) {
-                        Glide.with(HomeFrag.this).load(expenses.get(expenses.size() - 1).getUri()).into(imageView);                     } else {
+                        Glide.with(HomeFrag.this).load(expenses.get(expenses.size() - 1).getUri()).into(imageView);
+                    } else {
+                        imageView.setImageResource(R.drawable.default_image);
                     }
+
                 }
             }
 

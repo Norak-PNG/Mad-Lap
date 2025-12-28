@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.database.JsonPlaceholderApi;
@@ -17,6 +18,7 @@ import com.example.myapplication.database.Post;
 import com.example.myapplication.R;
 import com.example.myapplication.RecyclerViewAd;
 import com.example.myapplication.database.RetrofitClient;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,6 @@ import retrofit2.Response;
 
 public class ViewFrag extends Fragment {
 
-    // 1. Declare RecyclerView and the Adapter as member variables
     private RecyclerView recyclerView;
     private RecyclerViewAd recyclerViewAd;
     private List<Post> expenseList;
@@ -44,6 +45,11 @@ public class ViewFrag extends Fragment {
 
         expenseList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerView);
+
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        TextView email_view = view.findViewById(R.id.name);
+        email_view.setText(email);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

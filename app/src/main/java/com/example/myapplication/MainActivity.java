@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat; // <-- Import this
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,12 +24,17 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0); // Avoid padding bottom so nav bar sits flush
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            WindowInsetsControllerCompat controller = ViewCompat.getWindowInsetsController(v);
+            if (controller != null) {
+                controller.setAppearanceLightStatusBars(true);
+            }
             return insets;
         });
+
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
@@ -51,7 +57,7 @@ public class MainActivity extends BaseActivity {
             } else if (itemId == R.id.setting) {
                 replaceFragment(new SettingFrag());
                 return true;
-        }
+            }
             return false;
         });
     }

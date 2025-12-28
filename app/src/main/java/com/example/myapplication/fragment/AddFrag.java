@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -52,8 +53,11 @@ public class AddFrag extends Fragment {
 
     private AppDatabase appDatabase;
     private ArrayList<String> categoryList;
+    private ArrayList<String> currencyList;
+    private ArrayAdapter<String> currencyAdapter;
     private ArrayAdapter<String> categoryAdapter;
     private Spinner categorySpinner;
+    private Spinner currency;
     private ActivityResultLauncher<Intent> newCategoryLauncher;
     private ImageView capturedImageView;
     private Button galleryButton;
@@ -94,12 +98,17 @@ public class AddFrag extends Fragment {
         galleryButton = view.findViewById(R.id.galleryButton);
         Button add = view.findViewById(R.id.button);
         EditText amount = view.findViewById(R.id.editTextText1);
-        EditText currency = view.findViewById(R.id.editTextText2);
         EditText remark = view.findViewById(R.id.editTextText4);
         categorySpinner = view.findViewById(R.id.spinner2);
+        currency = view.findViewById(R.id.currency);
         Button add_category = view.findViewById(R.id.button2);
-
         capturedImageView.setImageResource(R.drawable.default_image);
+
+
+        String view_email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        TextView email_view = view.findViewById(R.id.name);
+        email_view.setText(view_email);
 
 
 
@@ -109,6 +118,15 @@ public class AddFrag extends Fragment {
         categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryList);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
+
+        currencyList = new ArrayList<>();
+        currencyList.add("USD");
+        currencyList.add("EUR");
+        currencyList.add("GBP");
+        currencyList.add("JPY");
+        currencyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, currencyList);
+        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currency.setAdapter(currencyAdapter);
 
         loadCategories();
 
@@ -147,7 +165,7 @@ public class AddFrag extends Fragment {
 
         add.setOnClickListener(v -> {
             String amount_send = amount.getText().toString();
-            String currency_send = currency.getText().toString();
+            String currency_send = currency.getSelectedItem().toString();
             String category_send = categorySpinner.getSelectedItem().toString();
             Log.d("ADD_FRAGMENT", category_send);
             String remark_send = remark.getText().toString();

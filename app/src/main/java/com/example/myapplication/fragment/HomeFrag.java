@@ -93,13 +93,7 @@ public class HomeFrag extends Fragment {
 
 
                     if (expenses.get(expenses.size() - 1).getUri() != null) {
-                        imageView.setImageURI(expenses.get(expenses.size() - 1).getUri());
-                        Glide.with(HomeFrag.this)
-                                .load(expenses.get(expenses.size() - 1).getUri())
-                                .placeholder(R.drawable.default_image)
-                                .error(R.drawable.default_image)
-                                .into(imageView);                     } else {
-                        imageView.setImageResource(R.drawable.default_image);
+                        Glide.with(HomeFrag.this).load(expenses.get(expenses.size() - 1).getUri()).into(imageView);                     } else {
                     }
                 }
             }

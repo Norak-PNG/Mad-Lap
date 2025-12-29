@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.preference)
     implementation(libs.room.runtime)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

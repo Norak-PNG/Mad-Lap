@@ -60,6 +60,12 @@ public class AddFrag extends Fragment {
     private ImageView capturedImageView;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
+    Button add_category;
+    Button openCameraButton;
+    Button galleryButton;
+    Button add;
+    EditText amount;
+    EditText remark;
     private String  imageUri;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,35 +87,28 @@ public class AddFrag extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        capturedImageView = view.findViewById(R.id.captured_image_view);
-        Button openCameraButton = view.findViewById(R.id.open_camera_button);
-        Button galleryButton = view.findViewById(R.id.galleryButton);
-        Button add = view.findViewById(R.id.button);
-        EditText amount = view.findViewById(R.id.editTextText1);
-        EditText remark = view.findViewById(R.id.editTextText4);
-        categorySpinner = view.findViewById(R.id.spinner2);
-        currency = view.findViewById(R.id.currency);
-        Button add_category = view.findViewById(R.id.button2);
-        capturedImageView.setImageResource(R.drawable.default_image);
 
-
-        String view_email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
-
-        TextView email_view = view.findViewById(R.id.name);
-        email_view.setText(view_email);
-
-
-
+        init_view(view);
         appDatabase = AppDatabase.getDatabase(requireContext().getApplicationContext());
+        init_adapter();
+        loadCategories();
+        init_listener();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadCategories();
+    }
+
+    private void init_adapter () {
         categoryList = new ArrayList<>();
         categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryList);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -117,48 +116,21 @@ public class AddFrag extends Fragment {
 
         ArrayList<String> currencyList = new ArrayList<>();
         currencyList.add("USD");
-        currencyList.add("EUR");
-        currencyList.add("GBP");
-        currencyList.add("JPY");
+        currencyList.add("KHR");
         ArrayAdapter<String> currencyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, currencyList);
         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         currency.setAdapter(currencyAdapter);
+    }
 
-        loadCategories();
-
+    private void init_listener () {
         add_category.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), NewCategoryActivity.class);
             newCategoryLauncher.launch(intent);
         });
-
-
-        cameraLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null && data.getData() != null) {
-                            Glide.with(this).load(data.getData()).into(capturedImageView);
-                            imageUri = data.getData().toString();
-                        }
-                    }
-                });
-
-        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                uri -> {
-                    if (uri != null) {
-                        Glide.with(this).load(uri).into(capturedImageView);
-                        imageUri = uri.toString();
-                    }
-                });
-
         openCameraButton.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), CameraActivity.class);
             cameraLauncher.launch(intent);
         });
-
-        galleryButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
-
         add.setOnClickListener(v -> {
             String amount_send = amount.getText().toString();
             String currency_send = currency.getSelectedItem().toString();
@@ -191,14 +163,46 @@ public class AddFrag extends Fragment {
             sendPostToServer(data);
 
         });
-    }
+        //
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null && data.getData() != null) {
+                            Glide.with(this).load(data.getData()).into(capturedImageView);
+                            imageUri = data.getData().toString();
+                        }
+                    }
+                });
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadCategories();
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        Glide.with(this).load(uri).into(capturedImageView);
+                        imageUri = uri.toString();
+                    }
+                });
+        //
+        galleryButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
     }
+    private  void init_view (View view) {
+        capturedImageView = view.findViewById(R.id.captured_image_view);
+        openCameraButton = view.findViewById(R.id.open_camera_button);
+        galleryButton = view.findViewById(R.id.galleryButton);
+        add = view.findViewById(R.id.button);
+        amount = view.findViewById(R.id.editTextText1);
+        remark = view.findViewById(R.id.editTextText4);
+        categorySpinner = view.findViewById(R.id.spinner2);
+        currency = view.findViewById(R.id.currency);
+        add_category = view.findViewById(R.id.button2);
+        capturedImageView.setImageResource(R.drawable.default_image);
 
+
+        String view_email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
+        TextView email_view = view.findViewById(R.id.name);
+        email_view.setText(view_email);
+    }
     private void loadCategories() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {

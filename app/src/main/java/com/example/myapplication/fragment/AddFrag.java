@@ -2,7 +2,11 @@ package com.example.myapplication.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,17 +24,20 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.CameraActivity;
-import com.example.myapplication.database.JsonPlaceholderApi;
 import com.example.myapplication.NewCategoryActivity;
-import com.example.myapplication.database.Post;
 import com.example.myapplication.R;
-import com.example.myapplication.database.RetrofitClient;
 import com.example.myapplication.database.AppDatabase;
 import com.example.myapplication.database.Category;
+import com.example.myapplication.database.JsonPlaceholderApi;
+import com.example.myapplication.database.Post;
+import com.example.myapplication.database.RetrofitClient;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -51,6 +58,7 @@ import retrofit2.Response;
 
 public class AddFrag extends Fragment {
 
+    private static final String HIGH_EXPENSE_CHANNEL_ID = "high_expense_channel";
     private AppDatabase appDatabase;
     private ArrayList<String> categoryList;
     private ArrayAdapter<String> categoryAdapter;
@@ -100,6 +108,7 @@ public class AddFrag extends Fragment {
         init_adapter();
         loadCategories();
         init_listener();
+        createNotificationChannel();
     }
 
     @Override
@@ -149,9 +158,14 @@ public class AddFrag extends Fragment {
                 return;
             }
 
+            int amountValue = Integer.parseInt(amount_send);
+            if (("USD".equals(currency_send) && amountValue >= 100) || ("KHR".equals(currency_send) && amountValue >= 400000)) {
+                showHighExpenseNotification(amountValue, currency_send);
+            }
+
             Post data = new Post();
             data.id = generatedId;
-            data.amount = Integer.parseInt(amount_send);
+            data.amount = amountValue;
             data.currency = currency_send;
             data.category = category_send;
             data.remark = remark_send;
@@ -257,6 +271,34 @@ public class AddFrag extends Fragment {
                 Log.e("ADD_FRAGMENT", "Network Failure: " + t.getMessage());
             }
         });
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "High Expense Warning";
+            String description = "Channel for high expense warnings";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(HIGH_EXPENSE_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = requireContext().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void showHighExpenseNotification(int amount, String currency) {
+        if (ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "Please grant notification permission to receive warnings.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), HIGH_EXPENSE_CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setContentTitle("High Expense Warning")
+                .setContentText("You have added an expense of " + amount + " " + currency)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
+        notificationManager.notify(1, builder.build());
     }
 
     private String generateUniqueId() {
